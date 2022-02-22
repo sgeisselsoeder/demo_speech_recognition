@@ -2,7 +2,7 @@
 # sudo apt install portaudio19-dev libportaudiocpp0
 SpeechRecognition
 pyaudio
-# pyttsx3
+pyttsx3
 pywhatkit
 wikipedia
 pyjokes
