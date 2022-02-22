@@ -1,5 +1,5 @@
 # sudo apt install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0 ffmpeg
-# sudo apt install portaudio19-dev libportaudiocpp0
+# sudo apt install portaudio19-dev libportaudiocpp0 espeak
 SpeechRecognition
 pyaudio
 pyttsx3
