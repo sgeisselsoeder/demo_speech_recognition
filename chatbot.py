@@ -21,7 +21,7 @@ def talk(text):
 
 def get_command():
     command = None
-    talk("I am listening ... what you say now will be sent to Google by default!")
+    talk("listening")
     while command is None:
         try:
             with sr.Microphone() as source:
@@ -40,6 +40,7 @@ def get_command():
         except sr.UnknownValueError:
             # Only analyzed silence
             # print("No recognizable words")
+            print("...")
             pass
         except Exception as e:
             print("ERROR")
@@ -69,6 +70,9 @@ def run():
         info = wikipedia.summary(person, 1)
         talk(info)
 
+    elif 'hear me' in command:
+        talk("Yes, I can hear you")
+
     elif 'alive' in command:
         talk("I might be alive one day ...")
 
@@ -76,21 +80,33 @@ def run():
         text = pyjokes.get_joke()
         talk(text)
 
-    elif "light on" in command or "licht an" in command:
+    elif "light" in command or "licht" in command or "lamp" in command:
+        keywords_off = ["off", "aus", "dunkel"]
+        for keyword_off in keywords_off:
+            if keyword_off in command:
+                os.system("ssh pi@192.168.178.50 python /home/pi/lightoff.py")
+                return
+        # keywords_on = ["on", "an", "hell"]
+        # for keyword_on in keywords_on:
+        #     if keyword_on in command:
         os.system("ssh pi@192.168.178.50 python /home/pi/lighton.py")
 
-    elif "light off" in command or "licht aus" in command:
+    elif "dark" in command or "dunkel" in command:
         os.system("ssh pi@192.168.178.50 python /home/pi/lightoff.py")
+
+    elif "bright" in command or "hell" in command:
+        os.system("ssh pi@192.168.178.50 python /home/pi/lighton.py")
 
     elif 'shut down' in command:
         talk("It was a pleasure talking to you")
         return True
 
     else:
-        talk("Sorry, I don't know what to do! Please repeat")
+        talk("Please repeat")
     return False
 
 
+talk("I will be listening in a second ... what you say now will be sent to Google by default!")
 while True:
     shutdown = run()
     if shutdown:
