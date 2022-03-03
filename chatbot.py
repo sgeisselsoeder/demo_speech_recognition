@@ -84,7 +84,7 @@ def run():
         text = pyjokes.get_joke()
         talk(text)
 
-    elif "light" in command or "licht" in command or "lamp" in command:
+    elif "light" in command or "lights" in command or "licht" in command or "lamp" in command:
         keywords_off = ["off", "aus", "dunkel"]
         for keyword_off in keywords_off:
             if keyword_off in command:
