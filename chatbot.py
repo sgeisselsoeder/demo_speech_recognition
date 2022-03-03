@@ -4,6 +4,7 @@ import pywhatkit
 import datetime
 import wikipedia
 import pyjokes
+import os
 
 listener = sr.Recognizer()
 engine = pyttsx3.init()
@@ -74,6 +75,12 @@ def run():
     elif 'joke' in command:
         text = pyjokes.get_joke()
         talk(text)
+
+    elif "light on" in command or "licht an" in command:
+        os.system("ssh pi@192.168.178.50 python /home/pi/lighton.py")
+
+    elif "light off" in command or "licht aus" in command:
+        os.system("ssh pi@192.168.178.50 python /home/pi/lightoff.py")
 
     elif 'shut down' in command:
         talk("It was a pleasure talking to you")
