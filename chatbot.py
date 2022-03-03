@@ -55,6 +55,10 @@ def run():
     if command is None:
         return False
 
+    light_ssh_url = "ssh pi@192.168.178.50"
+    lights_on_command = light_ssh_url + " python /home/pi/lighton.py"
+    lights_off_command = light_ssh_url + " python /home/pi/lightoff.py"
+
     if 'play' in command:
         song = command.replace("play", "")
         print("Song to play is" + song)
@@ -84,18 +88,16 @@ def run():
         keywords_off = ["off", "aus", "dunkel"]
         for keyword_off in keywords_off:
             if keyword_off in command:
-                os.system("ssh pi@192.168.178.50 python /home/pi/lightoff.py")
+                os.system(lights_off_command)
                 return
-        # keywords_on = ["on", "an", "hell"]
-        # for keyword_on in keywords_on:
-        #     if keyword_on in command:
-        os.system("ssh pi@192.168.178.50 python /home/pi/lighton.py")
+        # if light not off: on
+        os.system(lights_on_command)
 
     elif "dark" in command or "dunkel" in command:
-        os.system("ssh pi@192.168.178.50 python /home/pi/lightoff.py")
+        os.system(lights_off_command)
 
     elif "bright" in command or "hell" in command:
-        os.system("ssh pi@192.168.178.50 python /home/pi/lighton.py")
+        os.system(lights_on_command)
 
     elif 'shut down' in command:
         talk("It was a pleasure talking to you")
