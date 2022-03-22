@@ -55,9 +55,14 @@ def run():
     if command is None:
         return False
 
-    light_ssh_url = "ssh pi@192.168.178.50"
-    lights_on_command = light_ssh_url + " python /home/pi/lighton.py"
-    lights_off_command = light_ssh_url + " python /home/pi/lightoff.py"
+    # light_ssh_url = "ssh pi@192.168.178.50"
+    # lights_on_command = light_ssh_url + " python /home/pi/lighton.py"
+    # lights_off_command = light_ssh_url + " python /home/pi/lightoff.py"
+
+    light_url = "curl http://192.168.33.1/relay/0?turn="
+    lights_on_command = light_url + "on"
+    lights_off_command = light_url + "off"
+
 
     if 'play' in command:
         song = command.replace("play", "")
