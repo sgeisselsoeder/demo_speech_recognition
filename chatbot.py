@@ -19,7 +19,7 @@ def talk(text):
     engine.stop()
 
 
-def get_command():
+def get_command(searchstring: str = "computer"):
     command = None
     talk("listening")
     while command is None:
@@ -30,8 +30,9 @@ def get_command():
                 command = listener.recognize_google(voice)
                 command = command.lower()
                 print(command)
-                searchstring = "computer"
-                if searchstring in command:
+                if searchstring is None:
+                    return command
+                elif searchstring in command:
                     # print(searchstring + " was mentioned! Removing it.")
                     command = command.replace(searchstring, "")
                 else:
@@ -54,6 +55,8 @@ def run():
     command = get_command()
     if command is None:
         return False
+    if command == "":
+        command = get_command(searchstring=None)
 
     # light_ssh_url = "ssh pi@192.168.178.50"
     # lights_on_command = light_ssh_url + " python /home/pi/lighton.py"
@@ -62,7 +65,6 @@ def run():
     light_url = "curl http://192.168.33.1/relay/0?turn="
     lights_on_command = light_url + "on"
     lights_off_command = light_url + "off"
-
 
     if 'play' in command:
         song = command.replace("play", "")
@@ -113,7 +115,8 @@ def run():
     return False
 
 
-talk("I will be listening in a second ... what you say now will be sent to Google by default!")
+# talk("I will be listening in a second ... what you say now will be sent to Google by default!")
+talk("I will be listening in a second ...")
 while True:
     shutdown = run()
     if shutdown:
